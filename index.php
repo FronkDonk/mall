@@ -9,45 +9,40 @@
 
 <body>
     <div id="wrapper">
-        <header>
-            <h1>Webbserverprogrammering 1</h1>
-        </header>
-
+        <?php include("./inc/header.php") ?>
         <section id="leftColumn">
-            <nav>
-                <!-- Redigera länkar -->
-                <ul>
-                    <li><a href="">Hem</a></li>
-                    <li><a href="">Kontakt</a></li>
-                    <li><a href="">Blogg</a></li>
-                    <?php
-                    session_start();
-                    if (isset($_SESSION["loggedIn"])) {
-                        echo '<li><a href="pages/logout.php">Logga ut</a></li>';
-                    } else {
-                        echo '<li><a href="pages/login.php">Logga in</a></li>';
-                    }
-                    ?>
-                </ul>
-            </nav>
-            <aside>
-                <h1>Beskrivning</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nulla tristique elementum nisl, et vehicula neque laoreet ut.
-                    Praesent sed ultrices purus.
-                </p>
-            </aside>
+            <?php include("./inc/nav.php") ?>
+
+            <?php include("./inc/aside.php") ?>
         </section>
 
         <section id="main">
-            <h1>Välkommen till Webbserverprogrammering 1</h1>
-            <p>Startsida</p>
+            <?php
+            if (isset($_GET["page"])) {
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                switch ($_GET["page"]) {
+                    case "contact":
+                        include("pages/contact.php");
+                        break;
+
+                    case "blog":
+                        include("pages/blog.php");
+                        break;
+                    case "logout":
+                        include("pages/logout.php");
+                        break;
+                    case "login":
+                        include("pages/login.php");
+                        break;
+                }
+            }
+
+            ?>
         </section>
 
-        <footer>
-            <a href="mailto:mail@doman.se">mail@doman.se</a>
-        </footer>
+        <?php include("./inc/footer.php") ?>
     </div>
 </body>
 
